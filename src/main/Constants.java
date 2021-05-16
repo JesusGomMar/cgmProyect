@@ -14,7 +14,14 @@ public class Constants {
 	public static final int  MAX_ITERATIONS = 9;
 	public static final String END = "END"; 
 	
+	public static final String ERROR_NOT_HANDLED = "Not handled error";
 	public static final Integer OPTION_NEW_QUESTION = 1;
 	public static final Integer OPTION_ASK_QUESTION = 2;
+	public static final String MAKE_QUESTION = "Write your question together with the answers.";
+	public static final String RULES_MAKE_QUESTION = "Questions MUST end with '?' char and every answer must be between \"\" ";
+	public static final String RULES_MAKE_QUESTION_EXAMPLE = "Example: What is Peters favourite food? \"Pizza\" \"Spaghetti\" \"Ice cream\"";
 
+	
+	public static  String REGEX_QUESTIONS = "(?<=\\?).*";
+	public static  String REGEX_ANSWERS = "(?<=\\?).*";
 }
