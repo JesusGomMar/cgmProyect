@@ -23,7 +23,7 @@ public class mainFunction {
 				Integer num = in.nextInt();
 				dto.setSelectedOption(num);
 				if (null != num
-						&& (num.equals(Constants.OPTION_ASK_QUESTION) || num.equals(Constants.OPTION_NEW_QUESTION) 
+						&& (num.equals(Constants.OPTION_MAKE_QUESTION) || num.equals(Constants.OPTION_NEW_QUESTION) 
 								||num.equals(Constants.OPTION_END))) {
 					funcionality(dto);
 				} else {
@@ -38,7 +38,8 @@ public class mainFunction {
 				System.out.println(Constants.ERROR_MENU_OPTION);
 			}
 		}
-		if (dto.getIterator() >= Constants.MAX_ITERATIONS && !dto.getSelectedOption().equals(Constants.OPTION_END)) {
+		if (dto.getIterator() >= Constants.MAX_ITERATIONS 
+				&& !dto.getSelectedOption().equals(Constants.OPTION_END)) {
 			System.out.println(Constants.ERROR_ITERATIONS_EXCEDED);
 		}
 		System.out.println(Constants.END);
@@ -48,11 +49,12 @@ public class mainFunction {
 
 		switch (dto.getSelectedOption()) {
 		case 1:
-//			answerQuestion(dto);
+			madeQuestion(dto);
+			moreQuestions(dto); 
 			break;
 		case 2:
 			askQuestion(dto);
-			moreQuestions(dto);
+			moreAskQuestion(dto);
 			break;
 		case 3:
 			dto.setFlag(false);
@@ -68,22 +70,90 @@ public class mainFunction {
 	}
 
 	@SuppressWarnings("resource")
+	private static void moreAskQuestion(QuestionaryDto dto) {
+		dto.setIterator(0);
+		boolean flag3 = true;
+		while (flag3|| dto.getIterator() < Constants.MAX_ITERATIONS) {
+
+			System.out.println(Constants.MORE_ASK_QUESTION);
+			System.out.println(Constants.GO_MENU);
+			Scanner in = new Scanner(System.in);
+			Integer num = in.nextInt();
+			if (null != num && (num.equals(Constants.OPTION_MORE_ASK_QUESTIONS) || num.equals(Constants.OPTION_GO_MENU))) {
+				dto.setSelectedOption(num);
+				if (dto.getSelectedOption().equals(Constants.OPTION_MORE_ASK_QUESTIONS)) {
+					dto.setSelectedOption(Constants.OPTION_MORE_ASK_QUESTIONS);
+					funcionality(dto);
+				} else if (dto.getSelectedOption().equals(Constants.OPTION_GO_MENU)) {
+					flag3 = false;
+					dto.setIterator(11);
+					dto.setFlag(true);
+				} else {
+					dto.setIterator(dto.getIterator() + 1);
+					flag3 = false;
+					System.out.println(Constants.ERROR_MENU_OPTION2);
+				}
+			} else {
+				dto.setIterator(dto.getIterator() + 1);
+				flag3 = false;
+				System.out.println(Constants.ERROR_MENU_OPTION2);
+			}
+		}
+		if (dto.getIterator() >= Constants.MAX_ITERATIONS
+				&& !dto.getSelectedOption().equals(Constants.OPTION_GO_MENU)) {
+			System.out.println(Constants.ERROR_ITERATIONS_EXCEDED);
+		}
+		dto.setIterator(0);
+		
+	}
+
+	@SuppressWarnings("resource")
+	private static void askQuestion(QuestionaryDto dto) {
+		boolean found = false;
+		System.out.println(Constants.INSERT_QUESTION);
+		Scanner in = new Scanner(System.in);
+		String question = in.nextLine();
+		question = question.trim();
+		if (null != question && !question.isEmpty()) {
+			if (!dto.getLstQuestions().isEmpty()) {
+				for(QuestionsDto storedQuestion : dto.getLstQuestions()) {
+					if (storedQuestion.getQuestion().equals(question)) {
+						found = true;
+						for(String answer : storedQuestion.getAnswers()) {
+							System.out.println(" \t* "+answer);
+						}
+					}
+				}
+				if (!found) {
+					System.out.println(Constants.QUESTION_NOT_FOUND);
+				}
+			} else {
+				System.out.println(Constants.NO_STORED_QUESTIONS);
+			}
+
+		} else {
+			System.out.println(Constants.ERROR_EMPTY_INPUT);
+		}
+	}
+
+	@SuppressWarnings("resource")
 	private static void moreQuestions(QuestionaryDto dto) {
 		dto.setIterator(0);
 		boolean flag2 = true;
 		while (flag2 || dto.getIterator() < Constants.MAX_ITERATIONS) {
 
-			System.out.println(Constants.MORE_QUESTIONS);
+			System.out.println(Constants.MORE_MAKE_QUESTIONS);
 			System.out.println(Constants.GO_MENU);
 			Scanner in = new Scanner(System.in);
 			Integer num = in.nextInt();
-			if (null != num && (num.equals(Constants.OPTION_MORE_QUESTIONS) || num.equals(Constants.OPTION_GO_MENU))) {
+			if (null != num && (num.equals(Constants.OPTION_MORE_MAKE_QUESTIONS) || num.equals(Constants.OPTION_GO_MENU))) {
 				dto.setSelectedOption(num);
-				if (dto.getSelectedOption().equals(Constants.OPTION_MORE_QUESTIONS)) {
-					dto.setSelectedOption(Constants.OPTION_ASK_QUESTION);
+				if (dto.getSelectedOption().equals(Constants.OPTION_MORE_MAKE_QUESTIONS)) {
+					dto.setSelectedOption(Constants.OPTION_MAKE_QUESTION);
 					funcionality(dto);
 				} else if (dto.getSelectedOption().equals(Constants.OPTION_GO_MENU)) {
 					flag2 = false;
+					dto.setIterator(11);
 					dto.setFlag(true);
 				} else {
 					dto.setIterator(dto.getIterator() + 1);
@@ -96,14 +166,15 @@ public class mainFunction {
 				System.out.println(Constants.ERROR_MENU_OPTION2);
 			}
 		}
-		if (dto.getIterator() >= Constants.MAX_ITERATIONS) {
+		if (dto.getIterator() >= Constants.MAX_ITERATIONS
+				&& !dto.getSelectedOption().equals(Constants.OPTION_GO_MENU)) {
 			System.out.println(Constants.ERROR_ITERATIONS_EXCEDED);
 		}
 		dto.setIterator(0);
 	}
 
 	@SuppressWarnings("resource")
-	private static void askQuestion(QuestionaryDto dto) {
+	private static void madeQuestion(QuestionaryDto dto) {
 		QuestionsDto qDto = new QuestionsDto();
 		System.out.println(Constants.MAKE_QUESTION);
 		System.out.println(Constants.RULES_MAKE_QUESTION);

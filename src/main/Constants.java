@@ -18,10 +18,11 @@ public class Constants {
 	
 	public static final String ERROR_NOT_HANDLED = "Not handled error";
 	public static final Integer OPTION_NEW_QUESTION = 1;
-	public static final Integer OPTION_ASK_QUESTION = 2;
-	public static final Integer OPTION_MORE_QUESTIONS = 4;
-	public static final Integer OPTION_GO_MENU = 5;
+	public static final Integer OPTION_MAKE_QUESTION = 2;
 	public static final Integer OPTION_END = 3;
+	public static final Integer OPTION_MORE_MAKE_QUESTIONS = 4;
+	public static final Integer OPTION_GO_MENU = 5;
+	public static final Integer OPTION_MORE_ASK_QUESTIONS = 6;
 	public static final Integer MAX_CHAR = 250;
 	public static final String MAKE_QUESTION = "Write your question together with the answers.";
 	public static final String RULES_MAKE_QUESTION = "Questions MUST end with '?' char and every answer must be between \"\" ";
@@ -30,12 +31,16 @@ public class Constants {
 	public static final String ERROR_WRONG_QUESTION_STRUCTURE = "No question has been made or no question mark has been found.";
 	public static final String ERROR_WRONG_ANSWER_STRUCTURE = "No answer has been made after the question mark or they are not between quotes.";
 	public static final String ERROR_EMPTY_INPUT = "Empty input";
-	public static final String MORE_QUESTIONS = "4. MORE QUESTIONS";
+	public static final String MORE_MAKE_QUESTIONS = "4. MORE QUESTIONS";
 	public static final String GO_MENU = "5. GO MAIN MENU";
+	public static final String MORE_ASK_QUESTION = "6. ANOTHER QUESTION TO ASK";
 
 	
 	public static final String REGEX_QUESTIONS = "(?<=\\?).*";
 	public static final String REGEX_ANSWERS = "(?<=\\?).*";
+	public static final String INSERT_QUESTION = "Write the desired question";
+	public static final String QUESTION_NOT_FOUND = "The answer to life, universe and everything is 42";
+	public static final String NO_STORED_QUESTIONS = "There are no stored questions, please add some before try guessing.";
 	
 	public Constants() {
 		
