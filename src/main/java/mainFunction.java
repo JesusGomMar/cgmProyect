@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.commons.lang3.StringUtils;
+
+
 /**
  *
  * @author JGM
@@ -185,10 +188,11 @@ public class mainFunction {
 
 		String questionAndAnswers = in.nextLine();
 
-		if (null != questionAndAnswers && !questionAndAnswers.isEmpty()) {
+		if (null != questionAndAnswers && !questionAndAnswers.trim().isEmpty()) {
+			boolean flagErrorQ = false;
 			String[] questionVector = questionAndAnswers.split(Constants.REGEX_QUESTIONS);
-			String[] answerVector = questionAndAnswers.split("\"");
-			if (null != questionVector && questionVector.length == 1 && !questionVector[0].isEmpty()) {
+			Long countQuestionTag = questionAndAnswers.chars().filter(ch -> ch == '?').count();
+			if (countQuestionTag >= 1 && questionVector[0].trim().length() > 1) {
 				for (int i = 0; i < questionVector.length; i++) {
 					questionVector[i] = questionVector[i].trim();
 				}
@@ -198,28 +202,43 @@ public class mainFunction {
 					qDto.setQuestion(questionVector[0]);
 				}
 			} else {
+				flagErrorQ = true;
 				System.out.println(Constants.ERROR_WRONG_QUESTION_STRUCTURE);
-			}
-			if (null != answerVector && answerVector.length >= 2) {
-				List<String> answers = new ArrayList<>();
-				for (int j = 1; j < answerVector.length; j++) {
-					String trimAnswer = answerVector[j].trim();
-					if (trimAnswer.isEmpty()) {
-						break;
-					} else if (trimAnswer.length() > Constants.MAX_CHAR) {
-						System.out.println(Constants.ERROR_MAX_SIZE_EXCEDED);
-					} else {
-						answers.add(trimAnswer);
+			}	
+			if (!flagErrorQ) {
+				String[] answerVector = questionAndAnswers.split("\\?",2);
+				Long countQuoteTag = questionAndAnswers.chars().filter(ch -> ch == '\"').count();
+				
+				if (null != answerVector && !answerVector[1].trim().isEmpty() && (countQuoteTag % 2) == 0
+						&& checkAnswersNoQuotes(answerVector[1])) {
+					List<String> lstAnswers = new ArrayList<>();
+					String [] quotedAnswers = StringUtils.substringsBetween(answerVector[1], "\"", "\"");
+					for(String answer : quotedAnswers ) {
+						String trimAnswer = answer.trim();
+						if (trimAnswer.isEmpty()) {
+							lstAnswers.add(Constants.EMPTY_ANSWER);
+						} else if (trimAnswer.length() > Constants.MAX_CHAR) {
+							System.out.println(Constants.ERROR_MAX_SIZE_EXCEDED);
+						} else {
+							lstAnswers.add(trimAnswer);
+						}
 					}
+					qDto.setAnswers(lstAnswers);
+					dto.getLstQuestions().add(qDto);
+				} else {
+					System.out.println(Constants.ERROR_WRONG_ANSWER_STRUCTURE);
 				}
-				qDto.setAnswers(answers);
-				dto.getLstQuestions().add(qDto);
-			} else {
-				System.out.println(Constants.ERROR_WRONG_ANSWER_STRUCTURE);
 			}
 		} else {
 			System.out.println(Constants.ERROR_EMPTY_INPUT);
 		}
+	}
+
+
+
+	private static boolean checkAnswersNoQuotes(String answerVector) {
+		String answerVectorAux = answerVector;
+		return answerVectorAux.replaceAll(Constants.REGEX_ALL_IN_QUOTES, "").trim().isEmpty();
 	}
 
 }
