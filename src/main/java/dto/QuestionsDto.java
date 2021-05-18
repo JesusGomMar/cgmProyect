@@ -1,4 +1,4 @@
-package main.java;
+package main.java.dto;
 
 import java.util.List;
 

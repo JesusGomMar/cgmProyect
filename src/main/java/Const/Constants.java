@@ -1,5 +1,5 @@
 
-package main.java;
+package main.java.Const;
 /**
 *
 * @author JGM
@@ -13,7 +13,7 @@ public class Constants {
 	public static final String ERROR_MENU_OPTION = "The only options are the numbers 1, 2 or 3";
 	public static final String ERROR_MENU_OPTION2 = "The only options are the numbers 4 or 5";
 	public static final String ERROR_MENU_OPTION3 = "The only options are the numbers 6 or 5";
-	public static final String ERROR_ITERATIONS_EXCEDED = "More than 9 wrong selections.";
+	public static final String ERROR_ITERATIONS_EXCEDED = "More than 9 wrong selections. Exit forced.";
 	public static final int  MAX_ITERATIONS = 9;
 	public static final String END = "END"; 
 	
@@ -41,12 +41,12 @@ public class Constants {
 	public static final String REGEX_ANSWERS = "(?<=\\?).*";
 	public static final String REGEX_ALL_IN_QUOTES = "(\".*?\"|$)";
 	public static final String INSERT_QUESTION = "Write the desired question";
-	public static final String QUESTION_NOT_FOUND = "\\t * The answer to life, universe and everything is 42";
+	public static final String QUESTION_NOT_FOUND = "\t * The answer to life, universe and everything is 42";
 	public static final String NO_STORED_QUESTIONS = "There are no stored questions, please add some before try guessing.";
 	public static final String ANSWERS_HEADER = "Stored answers for the question ";
 	public static final String EMPTY_ANSWER = "<Empty answer>";
 	
 	public Constants() {
-		
+		// do nothing
 	}
 }
