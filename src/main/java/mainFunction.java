@@ -1,4 +1,4 @@
-package main;
+package main.java;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +63,7 @@ public class mainFunction {
 		default:
 			dto.setIterator(dto.getIterator()+1);
 			dto.setFlag(true);
+			System.out.println("dto.getSelectedOption() " + dto.getSelectedOption());
 			System.out.println(Constants.ERROR_NOT_HANDLED);
 			break;
 		}
@@ -91,12 +92,12 @@ public class mainFunction {
 				} else {
 					dto.setIterator(dto.getIterator() + 1);
 					flag3 = false;
-					System.out.println(Constants.ERROR_MENU_OPTION2);
+					System.out.println(Constants.ERROR_MENU_OPTION3);
 				}
 			} else {
 				dto.setIterator(dto.getIterator() + 1);
 				flag3 = false;
-				System.out.println(Constants.ERROR_MENU_OPTION2);
+				System.out.println(Constants.ERROR_MENU_OPTION3);
 			}
 		}
 		if (dto.getIterator() >= Constants.MAX_ITERATIONS
@@ -116,6 +117,7 @@ public class mainFunction {
 		question = question.trim();
 		if (null != question && !question.isEmpty()) {
 			if (!dto.getLstQuestions().isEmpty()) {
+				System.out.println(Constants.ANSWERS_HEADER+question);
 				for(QuestionsDto storedQuestion : dto.getLstQuestions()) {
 					if (storedQuestion.getQuestion().equals(question)) {
 						found = true;
@@ -149,7 +151,7 @@ public class mainFunction {
 			if (null != num && (num.equals(Constants.OPTION_MORE_MAKE_QUESTIONS) || num.equals(Constants.OPTION_GO_MENU))) {
 				dto.setSelectedOption(num);
 				if (dto.getSelectedOption().equals(Constants.OPTION_MORE_MAKE_QUESTIONS)) {
-					dto.setSelectedOption(Constants.OPTION_MAKE_QUESTION);
+					dto.setSelectedOption(Constants.OPTION_NEW_QUESTION);
 					funcionality(dto);
 				} else if (dto.getSelectedOption().equals(Constants.OPTION_GO_MENU)) {
 					flag2 = false;
@@ -202,7 +204,9 @@ public class mainFunction {
 				List<String> answers = new ArrayList<>();
 				for (int j = 1; j < answerVector.length; j++) {
 					String trimAnswer = answerVector[j].trim();
-					if (trimAnswer.isEmpty() || trimAnswer.length() > Constants.MAX_CHAR) {
+					if (trimAnswer.isEmpty()) {
+						break;
+					} else if (trimAnswer.length() > Constants.MAX_CHAR) {
 						System.out.println(Constants.ERROR_MAX_SIZE_EXCEDED);
 					} else {
 						answers.add(trimAnswer);
