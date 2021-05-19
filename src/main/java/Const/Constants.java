@@ -38,13 +38,14 @@ public class Constants {
 
 	
 	public static final String REGEX_QUESTIONS = "(?<=\\?).*";
-	public static final String REGEX_ANSWERS = "(?<=\\?).*";
 	public static final String REGEX_ALL_IN_QUOTES = "(\".*?\"|$)";
 	public static final String INSERT_QUESTION = "Write the desired question";
 	public static final String QUESTION_NOT_FOUND = "\t * The answer to life, universe and everything is 42";
 	public static final String NO_STORED_QUESTIONS = "There are no stored questions, please add some before try guessing.";
 	public static final String ANSWERS_HEADER = "Stored answers for the question ";
 	public static final String EMPTY_ANSWER = "<Empty answer>";
+	public static final String QUESTION_MARK_STRING = "\\?";
+	public static final String SCAPED_QUOTE_STRING = "\"";
 	
 	public Constants() {
 		// do nothing

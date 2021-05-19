@@ -86,8 +86,9 @@ class mainFunctionTest {
 		dto.setLstQuestions(lstQuestions );
 
 		mainFunction.askQuestion(dto);
-		assertNotNull(dto.getLstQuestions().get(0).getQuestion());
-		assertNotNull(dto.getLstQuestions().get(0).getAnswers().get(0));
+		assertEquals("Write the desired question\r\n" + 
+				"Stored answers for the question a?\r\n" + 
+				"\t * The answer to life, universe and everything is 42", outputStreamCaptor.toString().trim());
 	}
 
 }
