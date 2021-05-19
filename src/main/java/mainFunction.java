@@ -18,6 +18,7 @@ public class mainFunction {
 
 	/**
 	 * Main function
+	 * 
 	 * @param args
 	 */
 	@SuppressWarnings("resource")
@@ -60,10 +61,11 @@ public class mainFunction {
 	}
 
 	/**
+	 * Function that send the user to the selected path
 	 * 
-	 * @param dto
+	 * @param dto selectedOption with the value
 	 */
-	private static void funcionality(QuestionaryDto dto) {
+	public static void funcionality(QuestionaryDto dto) {
 
 		switch (dto.getSelectedOption()) {
 		case 1:
@@ -88,11 +90,12 @@ public class mainFunction {
 	}
 
 	/**
+	 * Menu that let the user choose between ask more questions or go to main menu
 	 * 
-	 * @param dto
+	 * @param dto flags neded and selected options
 	 */
 	@SuppressWarnings("resource")
-	private static void moreAskQuestion(QuestionaryDto dto) {
+	public static void moreAskQuestion(QuestionaryDto dto) {
 		dto.setIterator(0);
 		while (dto.isFlagAsk()) {
 			if (dto.getIterator() >= Constants.MAX_ITERATIONS) {
@@ -121,10 +124,12 @@ public class mainFunction {
 	}
 
 	/**
-	 * @param dto
-	 * @param num
+	 * Function that validate that the selected option is the right one
+	 * 
+	 * @param dto flags neded
+	 * @param num selected option
 	 */
-	private static void validateOptionMenuAsked(QuestionaryDto dto, Integer num) {
+	public static void validateOptionMenuAsked(QuestionaryDto dto, Integer num) {
 		if (null != num && (num.equals(Constants.OPTION_MORE_ASK_QUESTIONS) || num.equals(Constants.OPTION_GO_MENU))) {
 			dto.setSelectedOption(num);
 			if (dto.getSelectedOption().equals(Constants.OPTION_MORE_ASK_QUESTIONS)) {
@@ -147,11 +152,12 @@ public class mainFunction {
 	}
 
 	/**
+	 * Function that ask por the question and validate that is not empty
 	 * 
 	 * @param dto
 	 */
 	@SuppressWarnings("resource")
-	private static void askQuestion(QuestionaryDto dto) {
+	public static void askQuestion(QuestionaryDto dto) {
 		boolean found = false;
 		System.out.println(Constants.INSERT_QUESTION);
 		Scanner in = new Scanner(System.in);
@@ -165,11 +171,14 @@ public class mainFunction {
 	}
 
 	/**
+	 * Function where we look for a stored question and we print the not found
+	 * answer or the right answers
+	 * 
 	 * @param dto
-	 * @param found
-	 * @param question
+	 * @param found    initial flag
+	 * @param question input string
 	 */
-	private static void validateQuestionAsked(QuestionaryDto dto, boolean found, String question) {
+	public static void validateQuestionAsked(QuestionaryDto dto, boolean found, String question) {
 		if (!dto.getLstQuestions().isEmpty()) {
 			System.out.println(Constants.ANSWERS_HEADER + question);
 			for (QuestionsDto storedQuestion : dto.getLstQuestions()) {
@@ -189,10 +198,11 @@ public class mainFunction {
 	}
 
 	/**
+	 * Menu where we ask if the user want to add more questions or go to main manu
 	 * 
-	 * @param dto
+	 * @param dto with flags and selected action
 	 */
-	private static void moreQuestions(QuestionaryDto dto) {
+	public static void moreQuestions(QuestionaryDto dto) {
 		dto.setIterator(0);
 		while (dto.isFlagMake()) {
 			if (dto.getIterator() >= Constants.MAX_ITERATIONS) {
@@ -211,10 +221,12 @@ public class mainFunction {
 	}
 
 	/**
-	 * @param dto
-	 * @param in
+	 * Function that validate that the option selected is between the right ones
+	 * 
+	 * @param dto with flags
+	 * @param in  selected option
 	 */
-	private static void validateOptionMenuQuestions(QuestionaryDto dto, Scanner in) {
+	public static void validateOptionMenuQuestions(QuestionaryDto dto, Scanner in) {
 		try {
 			Integer num = in.nextInt();
 			if (null != num
@@ -246,11 +258,13 @@ public class mainFunction {
 	}
 
 	/**
+	 * Function where the user add the questions and answers. we validate that is
+	 * not empty
 	 * 
 	 * @param dto
 	 */
 	@SuppressWarnings("resource")
-	private static void madeQuestion(QuestionaryDto dto) {
+	public static void madeQuestion(QuestionaryDto dto) {
 		QuestionsDto qDto = new QuestionsDto();
 		System.out.println(Constants.MAKE_QUESTION);
 		System.out.println(Constants.RULES_MAKE_QUESTION);
@@ -273,11 +287,13 @@ public class mainFunction {
 	}
 
 	/**
+	 * Validation of the answers, length and structure
+	 * 
 	 * @param dto
 	 * @param qDto
 	 * @param questionAndAnswers
 	 */
-	private static void validateInputNewAnswers(QuestionaryDto dto, QuestionsDto qDto, String questionAndAnswers) {
+	public static void validateInputNewAnswers(QuestionaryDto dto, QuestionsDto qDto, String questionAndAnswers) {
 		String[] answerVector = questionAndAnswers.split("\\?", 2);
 		Long countQuoteTag = questionAndAnswers.chars().filter(ch -> ch == '\"').count();
 
@@ -303,13 +319,16 @@ public class mainFunction {
 	}
 
 	/**
+	 * Validation of the question, max length 255 char and we validate the correct
+	 * structure of the question
+	 * 
 	 * @param qDto
 	 * @param flagErrorQ
-	 * @param questionVector
-	 * @param countQuestionTag
+	 * @param questionVector   vector with the question made at position 0
+	 * @param countQuestionTag number of question tags
 	 * @return
 	 */
-	private static boolean validateInputNewQuestion(QuestionsDto qDto, boolean flagErrorQ, String[] questionVector,
+	public static boolean validateInputNewQuestion(QuestionsDto qDto, boolean flagErrorQ, String[] questionVector,
 			Long countQuestionTag) {
 		if (countQuestionTag >= 1 && questionVector[0].trim().length() > 1) {
 			for (int i = 0; i < questionVector.length; i++) {
@@ -328,11 +347,12 @@ public class mainFunction {
 	}
 
 	/**
+	 * validation that the answers are all in quotes
 	 * 
 	 * @param answerVector
 	 * @return
 	 */
-	private static boolean checkAnswersNoQuotes(String answerVector) {
+	public static boolean checkAnswersNoQuotes(String answerVector) {
 		String answerVectorAux = answerVector;
 		return answerVectorAux.replaceAll(Constants.REGEX_ALL_IN_QUOTES, "").trim().isEmpty();
 	}
